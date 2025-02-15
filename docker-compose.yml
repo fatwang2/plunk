@@ -3,6 +3,7 @@ services:
     image: "driaug/plunk"
     ports:
       - "3007:3000"
+      - "5007:5000"
     depends_on:
       db:
         condition: service_healthy
@@ -10,7 +11,7 @@ services:
         condition: service_started
     environment:
       REDIS_URL: '${REDIS_URL:-redis://:${REDIS_PASSWORD}@redis:6379}'
-      DATABASE_URL: '${DATABASE_URL:-postgresql://postgres:postgres@db:5432/postgres}'
+      DATABASE_URL: '${DATABASE_URL:-postgresql://postgres:postgres@db:5321/postgres}'
       JWT_SECRET: '${JWT_SECRET}'
       AWS_REGION: '${AWS_REGION}'
       AWS_ACCESS_KEY_ID: '${AWS_ACCESS_KEY_ID}'
@@ -23,6 +24,8 @@ services:
     entrypoint: [ "/app/entry.sh" ]
   db:
     image: postgres
+    ports:
+      - "5321:5432"
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
