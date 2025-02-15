@@ -9,7 +9,7 @@ services:
       redis:
         condition: service_started
     environment:
-      REDIS_URL: '${REDIS_URL:-redis://:plunkpass@redis:6379}'
+      REDIS_URL: '${REDIS_URL:-redis://redis:6379}'
       DATABASE_URL: '${DATABASE_URL:-postgresql://postgres:postgres@db:5432/postgres}'
       JWT_SECRET: '${JWT_SECRET}'
       AWS_REGION: '${AWS_REGION}'
@@ -36,7 +36,7 @@ services:
       timeout: 10s
   redis:
     image: redis
-    command: redis-server --requirepass plunkpass
+    command: redis-server --protected-mode no
 
 volumes:
   postgres_data:
