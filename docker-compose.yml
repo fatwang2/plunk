@@ -2,7 +2,7 @@ services:
   plunk:
     image: "driaug/plunk"
     ports:
-      - "3000:3000"
+      - "3007:3000"
     depends_on:
       db:
         condition: service_healthy
