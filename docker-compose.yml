@@ -10,7 +10,7 @@ services:
         condition: service_started
     environment:
       REDIS_URL: '${REDIS_URL:-redis://:${REDIS_PASSWORD:-plunkredis123}@redis:6379}'
-      DATABASE_URL: '${DATABASE_URL:-postgresql://postgres:postgres@db:5433/postgres}'
+      DATABASE_URL: '${DATABASE_URL:-postgresql://postgres:postgres@db:5432/postgres}'
       JWT_SECRET: '${JWT_SECRET}'
       AWS_REGION: '${AWS_REGION}'
       AWS_ACCESS_KEY_ID: '${AWS_ACCESS_KEY_ID}'
@@ -21,6 +21,8 @@ services:
       APP_URI: '${APP_URI}'
       DISABLE_SIGNUPS: 'False'
     entrypoint: [ "/app/entry.sh" ]
+    networks:
+      - plunk_network
   db:
     image: postgres
     ports:
@@ -36,9 +38,17 @@ services:
       interval: 10s
       retries: 5
       timeout: 10s
+    networks:
+      - plunk_network
   redis:
     image: redis
     command: redis-server --requirepass ${REDIS_PASSWORD:-plunkredis123}
+    networks:
+      - plunk_network
 
 volumes:
   postgres_data:
+
+networks:
+  plunk_network:
+    driver: bridge
