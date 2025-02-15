@@ -36,7 +36,6 @@ services:
       timeout: 10s
   redis:
     image: redis
-    command: redis-server --protected-mode no
 
 volumes:
   postgres_data:
