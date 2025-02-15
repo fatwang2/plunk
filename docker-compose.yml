@@ -1,4 +1,3 @@
-version: '3'
 services:
   plunk:
     image: "driaug/plunk"
@@ -37,3 +36,6 @@ services:
       timeout: 10s
   redis:
     image: redis
+
+volumes:
+  postgres_data:
