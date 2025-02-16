@@ -21,6 +21,9 @@ services:
       APP_URI: '${APP_URI}'
       DISABLE_SIGNUPS: 'False'
     entrypoint: [ "/app/entry.sh" ]
+    networks:
+      - plunk_network
+  
   db:
     image: postgres
     environment:
@@ -34,8 +37,15 @@ services:
       interval: 10s
       retries: 5
       timeout: 10s
+    networks:
+      - plunk_network
   redis:
     image: redis
     command: redis-server --requirepass ${REDIS_PASSWORD:-plunkredis123}
+    networks:
+      - plunk_network
 volumes:
   postgres_data:
+networks:
+  plunk_network:
+    driver: bridge
